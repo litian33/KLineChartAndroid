@@ -69,11 +69,17 @@ internal class DataProvider(private val viewPortHandler: ViewPortHandler) {
      */
     fun addData(kLineModel: KLineModel, pos: Int) {
         if (pos > -1) {
-            if (pos >= this.dataList.size) {
-                this.dataList.add(kLineModel)
-            } else {
-                this.dataList[pos] = kLineModel
+            if(pos > 0 && !this.dataList.get(pos-1).confirm){
+                // 判断之前的最后一条数据是否为不完整数据，如果时的话需要替换
+                this.dataList.get(pos-1).copyFrom(kLineModel)
+            }else{
+                if (pos >= this.dataList.size) {
+                    this.dataList.add(kLineModel)
+                } else {
+                    this.dataList[pos] = kLineModel
+                }
             }
+
             if (this.visibleDataMinPos + this.visibleDataCount >= this.dataList.size - 1) {
                 moveToLast()
             }

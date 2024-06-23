@@ -148,7 +148,12 @@ data class KLineModel @JvmOverloads constructor(
     /**
      * 简易波动指标
      */
-    var emv: EmvModel? = null
+    var emv: EmvModel? = null,
+
+    /**
+     * 是否完整的K线数据
+     */
+    var confirm: Boolean = true
 ): Parcelable {
     /**
      * 扩展数据
@@ -165,4 +170,16 @@ data class KLineModel @JvmOverloads constructor(
     override fun toString(): String {
         return "open: $openPrice, low: $lowPrice, high: $highPrice, close: $closePrice"
     }
+
+    fun copyFrom(o: KLineModel) {
+        this.openPrice = o.openPrice
+        this.lowPrice = o.lowPrice
+        this.highPrice = o.highPrice
+        this.closePrice = o.closePrice
+        this.volume = o.volume
+        this.turnover = o.turnover
+        this.confirm = o.confirm
+        this.timestamp = o.timestamp
+    }
+
 }
